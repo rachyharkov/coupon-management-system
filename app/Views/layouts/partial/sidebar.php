@@ -29,12 +29,12 @@
         </div>
       </div>
     </div>
-g
+
     <!-- Sidebar Menu -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item">
-          <a href="../widgets.html" class="nav-link  active">
+          <a href="<?= base_url('dashboard') ?>" class="nav-link <?= $title == 'Dashboard' ? 'active' : null ?>">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Dashboard
@@ -42,33 +42,25 @@ g
           </a>
         </li>
         <li class="nav-item">
-          <a href="../widgets.html" class="nav-link">
+          <a href="<?= base_url('kupon') ?>" class="nav-link <?= $title == 'Kupon' ? 'active' : null ?>">
             <i class="nav-icon fas fa-th"></i>
-            <p>
-              Widgets
-              <span class="right badge badge-danger">New</span>
-            </p>
+            <p>Kupon</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="../widgets.html" class="nav-link">
+          <a href="<?= base_url('formulir') ?>" class="nav-link <?= $title == 'Formulir' ? 'active' : null ?>">
             <i class="nav-icon fas fa-copy"></i>
-            <p>
-              Widgets
-              <!-- <span class="right badge badge-danger">New</span> -->
-            </p>
+            <p>Formulir<!-- <span class="right badge badge-danger">New</span> --></p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="../widgets.html" class="nav-link">
+          <a href="../widgets.html" class="nav-link <?= $title == 'Laporan' ? 'active' : null ?>">
             <i class="nav-icon fas fa-chart-pie"></i>
-            <p>
-              Widgets
-            </p>
+            <p>Laporan</p>
           </a>
         </li>
         <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a href="#" class="nav-link <?= $title == 'Pengaturan' ? 'menu-open' : null ?>">
             <i class="nav-icon fas fa-cog"></i>
             <p>
               Pengaturan
@@ -77,24 +69,32 @@ g
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="../../index.html" class="nav-link">
+              <a href="../../index.html" class="nav-link <?= $title == 'Akun' ? 'active' : null ?>">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Dashboard v1</p>
+                <p>Akun</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="../../index2.html" class="nav-link">
+              <a href="../../index2.html" class="nav-link <?= $title == 'Pengguna' ? 'active' : null ?>">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Dashboard v2</p>
+                <p>Pengguna</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="../../index3.html" class="nav-link">
+              <a href="../../index3.html" class="nav-link <?= $title == 'Backup and Restore' ? 'active' : null ?>">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Dashboard v3</p>
+                <p>Backup/Restore</p>
               </a>
             </li>
           </ul>
+        </li>
+        <li class="nav-item">
+          <a href="<?= base_url('logout') ?>" class="nav-link">
+            <i class="nav-icon fas fa-sign-out-alt"></i>
+            <p>
+              Logout
+            </p>
+          </a>
         </li>
       </ul>
     </nav>

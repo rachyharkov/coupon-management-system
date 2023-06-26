@@ -4,13 +4,13 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 
-class Dashboard extends BaseController
+class Kupon extends BaseController
 {
     public function index()
     {
         $data = [
-            'title' => 'Dashboard',
+            'title' => 'Kupon',
         ];
-        return view('admin/dashboard/index', $data);
+        return view('admin/kupon/index', $data);
     }
 }

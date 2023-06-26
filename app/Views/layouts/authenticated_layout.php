@@ -4,8 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title><?= $title ?> - Coupon Management System</title>
   <?= $this->include('layouts/partial/style') ?>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.1/dist/cdn.min.js"></script>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">

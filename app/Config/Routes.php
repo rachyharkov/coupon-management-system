@@ -36,6 +36,16 @@ $routes->get('/logout', 'Auth::logout');
 
 $routes->get('/dashboard', 'Admin\Dashboard::index');
 
+$routes->group('formulir', function ($routes) {
+    $routes->get('/', 'Admin\Formulir::index', ['as' => 'formulir.index']);
+    $routes->get('create', 'Admin\Formulir::create', ['as' => 'formulir.create']);
+    $routes->post('store', 'Admin\Formulir::store', ['as' => 'formulir.store']);
+    $routes->get('edit/(:segment)', 'Admin\Formulir::edit/$1', ['as' => 'formulir.edit']);
+    $routes->post('update/(:segment)', 'Admin\Formulir::update/$1', ['as' => 'formulir.update']);
+    $routes->delete('delete/(:segment)', 'Admin\Formulir::delete/$1', ['as' => 'formulir.delete']);
+    $routes->get('detail/(:segment)', 'Admin\Formulir::detail/$1', ['as' => 'formulir.detail']);
+});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
