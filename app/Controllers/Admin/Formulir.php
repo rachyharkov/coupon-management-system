@@ -30,4 +30,35 @@ class Formulir extends BaseController
         ];
         return view('admin/formulir/create', $data);
     }
+
+    public function store()
+    {
+        $data = $this->request->getVar();
+        // dd($data);
+        $field = [];
+
+        foreach($data['judul'] as $key => $value) {
+            $temp = [
+                'judul' => $value,
+                'tipe' => $data['tipe'][$key],
+            ];
+
+            if ($data['tipe'][$key] == 'radio' || $data['tipe'][$key] == 'checkbox') {
+                $temp['choice'] = $data['choice'][$key];
+            }
+
+            $field[] = $temp;
+        }
+        
+        $data = [
+            'nama' => $data['nama_formulir'],
+            'field' => json_encode($field),
+        ];
+
+        $this->formulirModel->insert($data);
+
+        session()->setFlashdata('success', 'Formulir berhasil ditambahkan.');
+
+        return redirect()->route('formulir.index');
+    }
 }

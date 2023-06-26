@@ -19,62 +19,76 @@
 
 <section class="content" x-data="fields()">
   <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-8 mx-auto field-list" x-ref="fieldList">
-        <template x-for="(fields, index) in fieldss" :key="index">
-          <div class="d-flex align-items-start field-item">
-            <button class="btn btn-grip" style="cursor: grab;">
-              <i class="fas fa-grip-vertical"></i>
-            </button>
-            <div class="card collapsed-card w-100">
-              <div class="card-header" data-card-widget="collapse" title="Collapse">
-                <h3 class="card-title" x-text="fields.judul || 'Isian Tidak Bernama'"></h3>
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                    <i class="fas fa-plus"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="card-body" style="display: none;">
-                <div class="row">
-                  <div class="form-group col">
-                    <label for="fieldName">Nama Isian</label>
-                    <input type="text" id="fieldName" class="form-control" value="AdminLTE" x-model="fields.judul">
-                  </div>
-                  <div class="form-group col">
-                    <label for="inputStatus">Tipe</label>
-                    <select class="form-control custom-select" x-model="fields.tipe">
-                      <option value="text">Text</option>
-                      <option value="textarea">Textarea</option>
-                      <option value="radio">Radio</option>
-                      <option value="checkbox">Checkbox</option>
-                    </select>
-                  </div>
-                </div>
-                <ul x-show="fields.tipe == 'radio' || fields.tipe == 'checkbox'">
-                  <template x-for="(choice, choiceIndex) in fields.choices" :key="choiceIndex">
-                    <li class="mb-2">
-                      <input type="text" class="form-control form-control-sm" x-model="choice.value">
-                    </li>
-                  </template>
-                </ul>
-                <template x-if="fields.tipe == 'radio' || fields.tipe == 'checkbox'">
-                  <button type="button" class="btn btn-primary btn-sm" x-on:click="addChoice(index, fields.tipe)">Tambah Pilihan</button>
-                </template>
-              </div>
-            </div>
-            <button class="btn btn-delete" x-on:click="removefieldConfirm(index)">
-              <i class="fas fa-trash"></i>
-            </button>
+    <?= form_open('formulir/store', ['id' => 'formulir-form', 'enctype' => 'multipart/form-data']); ?>
+      <div class="row">
+        <div class="col-md-8 mx-auto">
+          <div class="form-group">
+            <label>Nama Formulir</label>
+            <input type="text" class="form-control" name="nama_formulir" required>
           </div>
-        </template>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-8 mx-auto">
-        <button type="button" class="btn btn-light" x-on:click="addfields()"><span><i class="fas fa-plus"></i></span>Tambah Isian</button>
+      <div class="row">
+        <div class="col-md-8 mx-auto field-list" x-ref="fieldList">
+          <template x-for="(field, index) in fields" :key="index">
+            <div class="d-flex align-items-start field-item">
+              <button class="btn btn-grip" style="cursor: grab;">
+                <i class="fas fa-grip-vertical"></i>
+              </button>
+              <div class="card collapsed-card w-100">
+                <div class="card-header" data-card-widget="collapse" title="Collapse">
+                  <h3 class="card-title" x-text="field.judul || 'Isian Tidak Bernama'"></h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                      <i class="fas fa-plus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body" style="display: none;">
+                  <div class="row">
+                    <div class="form-group col">
+                      <label>Nama Isian</label>
+                      <input type="text" class="form-control judul" value="AdminLTE" name="judul[]" x-model="field.judul" required>
+                    </div>
+                    <div class="form-group col">
+                      <label for="inputStatus">Tipe</label>
+                      <select class="form-control custom-select tipe" name="tipe[]" x-model="field.tipe" required x-on:change="if (field.tipe == 'radio' || field.tipe == 'checkbox') { field.choices = ['']; } else { field.splice('choices', 1); }">
+                        <option value="text">Text</option>
+                        <option value="textarea">Textarea</option>
+                        <option value="radio">Radio</option>
+                        <option value="checkbox">Checkbox</option>
+                      </select>
+                    </div>
+                  </div>
+                  <ul x-show="field.tipe == 'radio' || field.tipe == 'checkbox'">
+                    <template x-for="(choice, choiceIndex) in field.choices" :key="choiceIndex">
+                      <li class="mb-2 d-flex align-items-center">
+                        <input type="text" class="form-control form-control-sm" :name="'choice[' + index + '][]'" x-model="choice.value" required>
+                        <button type="button" class="btn btn-delete btn-sm ml-2" x-on:click="removeChoice(index, choiceIndex)">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </li>
+                    </template>
+                  </ul>
+                  <template x-if="field.tipe == 'radio' || field.tipe == 'checkbox'">
+                    <button type="button" class="btn btn-primary btn-sm" x-on:click="addChoice(index, field.tipe)">Tambah Pilihan</button>
+                  </template>
+                </div>
+              </div>
+              <button class="btn btn-delete" x-on:click="removefieldConfirm(index)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </template>
+        </div>
       </div>
-    </div>
+      <div class="row">
+        <div class="col-md-8 mx-auto">
+          <button type="button" class="btn btn-light" x-on:click="addfields()"><span><i class="fas fa-plus"></i></span>Tambah Isian</button>
+          <button type="submit" class="btn btn-primary float-right">Simpan</button>
+        </div>
+      </div>
+    <?= form_close(); ?>
   </div>
   <div class="modal fade" id="modal-confirm-delete">
     <div class="modal-dialog modal-dialog-centered">
@@ -107,32 +121,20 @@
 
     function fields() {
       return {
-        fieldss: [],
+        fields: [],
         selected_index: null,
+        sortable: null,
         init() {
-          this.fieldss.push({
-            judul: '',
-            deskripsi: '',
-            tipe: '',
-            choices: [],
-          });
-
-          Sortable.create(this.$refs.fieldList, {
+          this.sortable = Sortable.create(this.$refs.fieldList, {
             handle: '.btn-grip',
             animation: 150,
-            onEnd: (evt) => {
-              const itemEl = evt.item;
-              const item = this.fieldss.splice(evt.oldIndex, 1)[0];
-              this.fieldss.splice(evt.newIndex, 0, item);
-            },
           });
         },
         addfields() {
-          this.fieldss.push({
-            judul: '',
-            deskripsi: '',
-            tipe: '',
-            choices: [],
+          this.fields.push({
+            urutan: this.fields.length + 1,
+            judul: null,
+            tipe: 'text'
           });
         },
         removefieldConfirm(index) {
@@ -140,16 +142,18 @@
           this.selected_index = index;
         },
         removefield(index) {
-          this.fieldss.splice(index, 1);
+          this.fields.splice(index, 1);
           this.selected_index = null;
           $('#modal-confirm-delete').modal('hide');
         },
         addChoice(index, tipe) {
-          this.fieldss[index].choices = this.fieldss[index].choices || [];
-          this.fieldss[index].choices.push({
-            value: '',
+          this.fields[index].choices.push({
+            value: null
           });
         },
+        removeChoice(index, choiceIndex) {
+          this.fields[index].choices.splice(choiceIndex, 1);
+        }
       }
     }
 

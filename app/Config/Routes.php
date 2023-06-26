@@ -2,6 +2,8 @@
 
 namespace Config;
 
+use App\Controllers\Admin\Formulir;
+
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
 
@@ -37,13 +39,14 @@ $routes->get('/logout', 'Auth::logout');
 $routes->get('/dashboard', 'Admin\Dashboard::index');
 
 $routes->group('formulir', function ($routes) {
-    $routes->get('/', 'Admin\Formulir::index', ['as' => 'formulir.index']);
-    $routes->get('create', 'Admin\Formulir::create', ['as' => 'formulir.create']);
-    $routes->post('store', 'Admin\Formulir::store', ['as' => 'formulir.store']);
-    $routes->get('edit/(:segment)', 'Admin\Formulir::edit/$1', ['as' => 'formulir.edit']);
-    $routes->post('update/(:segment)', 'Admin\Formulir::update/$1', ['as' => 'formulir.update']);
-    $routes->delete('delete/(:segment)', 'Admin\Formulir::delete/$1', ['as' => 'formulir.delete']);
-    $routes->get('detail/(:segment)', 'Admin\Formulir::detail/$1', ['as' => 'formulir.detail']);
+    $routes->get('/', [Formulir::class, 'index'], ['as' => 'formulir.index']); // named route
+    $routes->get('create', [Formulir::class, 'create'], ['as' => 'formulir.create']); // named route
+    $routes->post('store', [Formulir::class, 'store'], ['as' => 'formulir.store']); // named route
+    $routes->addPlaceholder('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
+    $routes->get('edit/(:uuid)', [Formulir::class, 'edit/$1'], ['as' => 'formulir.edit']); // named route
+    $routes->post('update/(:uuid)', [Formulir::class, 'update/$1'], ['as' => 'formulir.update']); // named route
+    $routes->get('delete/(:uuid)', [Formulir::class, 'delete/$1'], ['as' => 'formulir.delete']); // named route
+    $routes->get('detail/(:uuid)', [Formulir::class, 'detail/$1'], ['as' => 'formulir.detail']); // named route
 });
 
 /*
