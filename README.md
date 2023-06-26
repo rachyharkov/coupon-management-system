@@ -1,27 +1,16 @@
-# CodeIgniter 4 Application Starter
+# Coupon Management System
 
-## What is CodeIgniter?
+## What is this?
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+A PHP Web Application build on top of the [CodeIgniter](https://codeigniter.com) which is a PHP full-stack web framework that is light, fast, flexible and secure. This application is currently used by [PT Lapan Technology Indonesia](https://www.lapan-tech.com) as our marketing tool to manage our coupon distribution and redemption. You can use this application as a reference to build your own coupon management system.
 
 This repository holds a composer-installable app starter.
 It has been built from the
 [development repository](https://github.com/codeigniter4/CodeIgniter4).
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
-
-The user guide corresponding to the latest version of the framework can be found
-[here](https://codeigniter4.github.io/userguide/).
-
 ## Installation & updates
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
-
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+Just clone it, and then run `composer update` whenever there is a new release of app.
 
 ## Setup
 
@@ -39,15 +28,6 @@ framework are exposed.
 
 **Please** read the user guide for a better explanation of how CI4 works!
 
-## Repository Management
-
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
-
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
-
 ## Server Requirements
 
 PHP version 7.4 or higher is required, with the following extensions installed:
@@ -60,3 +40,13 @@ Additionally, make sure that the following extensions are enabled in your PHP:
 - json (enabled by default - don't turn it off)
 - [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
 - [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+
+## License
+
+The CodeIgniter framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT) and the application is licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+
+## Want to make it really yours?
+
+You can change the name of the application, the logo, the favicon, the color scheme, the layout, literally anything. But please don't remove the credits from the footer. I'll be very grateful if you keep the credits there.
+
+If you want to make it really yours and having benefits from it, you check my profile and contact me to discuss about it (because right now my m-banking account is having a problem, so I can't receive any money from you). Oh, also I'll be very happy if you want to contribute to this project.
