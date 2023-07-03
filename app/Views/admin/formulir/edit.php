@@ -19,12 +19,13 @@
 
 <section class="content" x-data="fields()">
   <div class="container-fluid">
-    <?= form_open('formulir/store', ['id' => 'formulir-form', 'enctype' => 'multipart/form-data']); ?>
+    <?= form_open('formulir/update', ['id' => 'formulir-form', 'enctype' => 'multipart/form-data']); ?>
+      <input type="hidden" name="id" value="<?= $formulir['id']; ?>">
       <div class="row">
         <div class="col-md-8 mx-auto">
           <div class="form-group">
             <label>Nama Formulir</label>
-            <input type="text" class="form-control" name="nama_formulir" required value="<?= old('nama_formulir'); ?>">
+            <input type="text" class="form-control" name="nama_formulir" required value="<?= $formulir['nama']; ?>">
           </div>
         </div>
       </div>
@@ -32,7 +33,7 @@
         <div class="col-md-8 mx-auto field-list" x-ref="fieldList">
           <template x-for="(field, index) in fields" :key="index">
             <div class="d-flex align-items-start field-item">
-              <button class="btn btn-grip" style="cursor: grab;">
+              <button type="button" class="btn btn-grip" style="cursor: grab;">
                 <i class="fas fa-grip-vertical"></i>
               </button>
               <div class="card collapsed-card w-100">
@@ -75,7 +76,7 @@
                   </template>
                 </div>
               </div>
-              <button class="btn btn-delete" x-on:click="removefieldConfirm(index)">
+              <button type="button" class="btn btn-delete" x-on:click="removefieldConfirm(index)">
                 <i class="fas fa-trash"></i>
               </button>
             </div>
@@ -121,13 +122,19 @@
 
     function fields() {
       return {
-        fields: [],
+        fields: <?= $formulir['field']; ?>,
         selected_index: null,
         sortable: null,
         init() {
-          this.sortable = Sortable.create(this.$refs.fieldList, {
-            handle: '.btn-grip',
-            animation: 150,
+          this.$nextTick(() => {
+            this.sortable = Sortable.create(this.$refs.fieldList, {
+              handle: '.btn-grip',
+              animation: 150,
+              onEnd: (evt) => {
+                let item = this.fields.splice(evt.oldIndex, 1)[0];
+                this.fields.splice(evt.newIndex, 0, item);
+              }
+            })
           });
         },
         addfields() {

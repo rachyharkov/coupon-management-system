@@ -44,8 +44,8 @@ $routes->group('formulir', function ($routes) {
     $routes->post('store', [Formulir::class, 'store'], ['as' => 'formulir.store']); // named route
     $routes->addPlaceholder('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
     $routes->get('edit/(:uuid)', [Formulir::class, 'edit/$1'], ['as' => 'formulir.edit']); // named route
-    $routes->post('update/(:uuid)', [Formulir::class, 'update/$1'], ['as' => 'formulir.update']); // named route
-    $routes->get('delete/(:uuid)', [Formulir::class, 'delete/$1'], ['as' => 'formulir.delete']); // named route
+    $routes->post('update', [Formulir::class, 'update'], ['as' => 'formulir.update']); // named route
+    $routes->delete('delete/(:uuid)', [Formulir::class, 'delete/$1'], ['as' => 'formulir.delete']); // named route
     $routes->get('detail/(:uuid)', [Formulir::class, 'detail/$1'], ['as' => 'formulir.detail']); // named route
 });
 

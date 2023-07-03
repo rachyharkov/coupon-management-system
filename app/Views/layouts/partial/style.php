@@ -7,3 +7,4 @@
 <?= link_tag('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') ?>
 <?= link_tag('assets/css/adminlte.min.css') ?>
 <?= link_tag('assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') ?>
+<?= link_tag('assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') ?>
