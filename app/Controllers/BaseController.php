@@ -35,7 +35,7 @@ abstract class BaseController extends Controller
      *
      * @var array
      */
-    protected $helpers = ['html', 'form', 'db_helper']; // Load html helper, kayak link_tag, script_tag, form_open, form_close, dll.
+    protected $helpers = ['html', 'form', 'db_helper','coupon_helper']; // Load html helper, kayak link_tag, script_tag, form_open, form_close, dll.
 
     /**
      * Be sure to declare properties for any property fetch you initialized.

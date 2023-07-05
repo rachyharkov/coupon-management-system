@@ -62,7 +62,7 @@ class Autoload extends AutoloadConfig
      *
      * @var array<string, string>
      */
-    public $classmap = ['db_helper'];
+    public $classmap = ['db_helper', 'coupon_helper'];
 
     /**
      * -------------------------------------------------------------------

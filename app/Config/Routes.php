@@ -3,6 +3,7 @@
 namespace Config;
 
 use App\Controllers\Admin\Formulir;
+use App\Controllers\Admin\Kupon;
 
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
@@ -47,6 +48,17 @@ $routes->group('formulir', function ($routes) {
     $routes->post('update', [Formulir::class, 'update'], ['as' => 'formulir.update']); // named route
     $routes->delete('delete/(:uuid)', [Formulir::class, 'delete/$1'], ['as' => 'formulir.delete']); // named route
     $routes->get('detail/(:uuid)', [Formulir::class, 'detail/$1'], ['as' => 'formulir.detail']); // named route
+});
+
+$routes->group('kupon', function($routes) {
+    $routes->get('/', [Kupon::class, 'index'], ['as' => 'kupon.index']);
+    $routes->get('create', [Kupon::class, 'create'], ['as' => 'kupon.create']);
+    $routes->post('store', [Kupon::class, 'store'], ['as' => 'kupon.store']);
+    $routes->addPlaceholder('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
+    $routes->get('edit/(:uuid)', [Kupon::class, 'edit/$1'], ['as' => 'kupon.edit']);
+    $routes->post('update', [Kupon::class, 'update'], ['as' => 'kupon.update']);
+    $routes->delete('delete/(:uuid)', [Kupon::class, 'delete/$1'], ['as' => 'kupon.delete']);
+    $routes->get('detail/(:uuid)', [Kupon::class, 'detail/$1'], ['as' => 'kupon.detail']);
 });
 
 /*

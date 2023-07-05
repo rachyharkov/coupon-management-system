@@ -58,7 +58,6 @@ class Formulir extends BaseController
         $this->formulirModel->insert($data);
 
         session()->setFlashdata('success', 'Formulir berhasil ditambahkan.');
-
         return redirect()->route('formulir.index');
     }
 

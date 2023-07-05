@@ -1,7 +1,7 @@
 <?= $this->extend('layouts/authenticated_layout'); ?>
 
 <?= $this->section('title'); ?>
-  Dashboard
+  Kupon
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -9,30 +9,39 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
-        <!-- Default box -->
         <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Title</h3>
-
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-          </div>
           <div class="card-body">
-            <p>Selamat datang di halaman dashboard Kupon</p>
+            <table id="dataTable" class="table">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Nama</th>
+                  <th>Dibuat</th>
+                  <th>#</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php foreach($kupons as $key => $value) { ?>
+                  <tr>
+                    <td><?= $key+1; ?></td>
+                    <td><?= $value['nama']; ?></td>
+                    <td><?= $value['created_at']; ?></td>
+                    <td>
+                      <a href="<?= route_to('kupon.detail', $value['id']); ?>" class="btn btn-primary btn-sm">Detail</a>
+                      <a href="<?= route_to('kupon.edit', $value['id']); ?>" class="btn btn-warning btn-sm">Edit</a>
+                      <form action="<?= route_to('kupon.delete', $value['id']); ?>" method="post" style="display: inline-block;">
+                        <?= csrf_field(); ?>
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                      </form>
+                    </td>
+                  </tr>
+                <?php } ?>
+              </tbody>
+            </table>
           </div>
-          <!-- /.card-body -->
-          <div class="card-footer">
-            Footer
-          </div>
-          <!-- /.card-footer-->
         </div>
-        <!-- /.card -->
+        <!-- Default box -->
       </div>
     </div>
   </div>
@@ -41,11 +50,19 @@
 
 <?= $this->section('script'); ?>
   <script>
-    $(document).ready(function() {
-      $("#dataTable").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    });
+    $("#dataTable").DataTable({
+      "responsive": true, 
+      "lengthChange": false, 
+      "autoWidth": false,
+      // add custom button
+      buttons: [
+        {
+          text: 'Tambah',
+          action: function ( e, dt, node, config ) {
+            window.location.href = "<?= url_to('kupon.create'); ?>";
+          }
+        }
+      ]
+    }).buttons().container().appendTo('#dataTable_wrapper .col-md-6:eq(0)');
   </script>
 <?= $this->endSection(); ?>

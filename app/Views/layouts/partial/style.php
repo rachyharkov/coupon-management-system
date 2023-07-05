@@ -8,3 +8,5 @@
 <?= link_tag('assets/css/adminlte.min.css') ?>
 <?= link_tag('assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') ?>
 <?= link_tag('assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') ?>
+<?= link_tag('assets/plugins/select2/css/select2.min.css') ?>
+<?= link_tag('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') ?>

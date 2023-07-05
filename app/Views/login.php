@@ -21,7 +21,7 @@
           <?= $validation->listErrors() ?>
         </div>
       <?php endif; ?>
-      <form action="<?= url_to('login') ?>" method="post" enctype="multipart/form-data">
+      <form action="<?= base_url('login') ?>" method="post" enctype="multipart/form-data">
         <div class="input-group mb-3">
           <input type="email" class="form-control" placeholder="Email" name="email" value="<?= set_value('email') ?>">
           <div class="input-group-append">

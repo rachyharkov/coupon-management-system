@@ -18,6 +18,7 @@
 <?= script_tag('assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.13.0/Sortable.min.js"></script>
 <?= script_tag('assets/plugins/sweetalert2/sweetalert2.min.js') ?>
+<?= script_tag('assets/plugins/select2/js/select2.full.min.js') ?>
 
 <?php
   // if session flashdata exists then show alert
