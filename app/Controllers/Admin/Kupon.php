@@ -79,4 +79,16 @@ class Kupon extends BaseController
         session()->setFlashdata('success', 'Formulir berhasil ditambahkan.');
         return redirect()->route('kupon.index');
     }
+
+    public function edit($id)
+    {
+        $data = [
+            'title' => 'Edit Kupon',
+            'validation' => \Config\Services::validation(),
+            'formulirs' => $this->formulirModel->findAll(),
+            'kupon' => $this->kuponModel->find($id),
+            'kupon_products' => $this->KuponProductsModel->where('kupon_id', $id)->findAll(),
+        ];
+        return view('admin/kupon/edit', $data);
+    }
 }

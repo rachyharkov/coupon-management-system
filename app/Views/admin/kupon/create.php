@@ -33,17 +33,17 @@ Buat Set Kupon
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="code_total">Berapa Banyak?</label>
-                    <input required type="number" class="form-control" name="code_total" id="code_total" placeholder="Masukan Angka" min="0" x-model.number="codeCount">
+                    <input required type="number" class="form-control" name="code_total" id="code_total" placeholder="Masukan Angka" min="0" x-model.number="codeCount" x-on:input="codeCount = parseInt(codeCount, 10)">
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="code_length">Jumlah Karakter Kode?</label>
-                    <input required type="number" class="form-control" name="code_length" id="code_length" placeholder="Masukan Angka" min="0" max="12" x-model.number="codeLength">
+                    <input required type="number" class="form-control" name="code_length" id="code_length" placeholder="Masukan Angka" min="0" max="12" x-model.number="codeLength" x-on:change="codeLength = parseInt(codeLength, 10)" x-on:input="codeLength = codeLength > 12 ? 12 : codeLength">
                   </div>
                 </div>
               </div>
-              <a href="#">Tampilkan Opsi Lanjutan</a>
+              <a href="#" @click="showAlert">Tampilkan Opsi Lanjutan</a>
             </div>
           </div>
 
@@ -147,7 +147,7 @@ Buat Set Kupon
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                           </div>
-                          <input required type="date" class="form-control" x-model="k.value" name="coupon_date_expired" x-on:input="setMessage(index, k.jenis)">
+                          <input required type="date" class="form-control" x-model="k.value" name="coupon_date_expired" x-on:input="setMessage(index, k.jenis)" min="<?= date('Y-m-d') ?>">
                           <button type="button" class="btn btn-danger" @click="removeKondisi(index)">Hapus</button>
                         </div>
                       </template>
@@ -156,7 +156,8 @@ Buat Set Kupon
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-users"></i></span>
                           </div>
-                          <input required type="number" class="form-control" x-model="k.value" name="coupon_limit" x-on:input="setMessage(index, k.jenis)">
+                          <input required type="number" class="form-control" x-model="k.value" name="coupon_limit" min="0" x-on:input="setMessage(index, k.jenis);
+                          k.value = k.value.replace(/^0+/, '')" x-on:change="k.value > $('#code_total').val() ? k.value = $('#code_total').val() : ''">
                           <button type="button" class="btn btn-danger" @click="removeKondisi(index)">Hapus</button>
                         </div>
                       </template>
@@ -201,10 +202,15 @@ Buat Set Kupon
               <div class="badge badge-success" x-show="status" x-cloak>Aktif</div>
               <div class="badge badge-danger" x-show="!status" x-cloak>Tidak Aktif</div>
               <div class="row mt-2">
-                <div class="col">
-                  <ul class="pl-4" @coupon-notes.window="setOverviewNotes($event.detail)" @condition-notes.window="setConditionNotes($event.detail)">
+                <div class="col" @coupon-notes.window="setOverviewNotes($event.detail)" @condition-notes.window="setConditionNotes($event.detail)">
+                  <ul class="pl-4">
                     <template x-for="(note_overview, index) in coupon_notes.overview" :key="index">
                       <li x-text="note_overview"></li>
+                    </template>
+                    <template x-if="coupon_notes.condition.length <= 0">
+                      <template x-for="item in ['Tidak dibatasi waktu', 'Tidak dibatasi jumlah penggunaan kupon']" :key="index">
+                        <li x-text="item"></li>
+                      </template>
                     </template>
                     <template x-for="(note_condition, index) in coupon_notes.condition" :key="index">
                       <li x-text="note_condition.message"></li>
@@ -280,6 +286,13 @@ Buat Set Kupon
         }
 
         this.$dispatch('preview-code', couponCode)
+      },
+      showAlert() {
+        Swal.fire({
+          title: 'Segera Hadir',
+          text: 'Fitur sedang dalam pengembangan',
+          icon: 'info'
+        })
       }
     }
   }
@@ -366,9 +379,17 @@ Buat Set Kupon
       setMessageIfDiscount() {
         if(this.products.length > 1) {
 
-          const max_discount = this.products.reduce((prev, current) => {
-            return (prev.coupon_value_in_percent > current.coupon_value_in_percent) ? prev : current
-          }).coupon_value_in_percent
+          let max_discount = 0
+
+          if (this.coupon_value_type == 'percentage') {
+            max_discount = this.products.reduce((prev, current) => {
+              return (prev.coupon_value_in_percent > current.coupon_value_in_percent) ? prev : current
+            }).coupon_value_in_percent
+          } else {
+            max_discount = this.products.reduce((prev, current) => {
+              return (prev.coupon_value_in_fixed > current.coupon_value_in_fixed) ? prev : current
+            }).coupon_value_in_fixed
+          }
 
           if (this.coupon_value_type == 'percentage') {
             return [`Diskon semuanya hingga ${max_discount}%`]
@@ -454,7 +475,7 @@ Buat Set Kupon
       },
       setMessage(index, jenis) {
         if(jenis == 1) {
-          this.kondisi[index].message = `Batas waktu penggunaan ${this.kondisi[index].value}`
+          this.kondisi[index].message = `Batas waktu penggunaan ${new Date(this.kondisi[index].value).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}`
           this.$dispatch('condition-notes', this.kondisi)
           return
         }
