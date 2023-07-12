@@ -48,8 +48,10 @@ class Kupon extends BaseController
         $data = $this->request->getVar();
 
         if(isset($data['condition_custom'])) {
-            $data['condition_custom'] = json_encode($data['condition_custom']);
+            $data['custom_condition'] = json_encode($data['condition_custom']);
         }
+
+        // dd($data);
         $this->kuponModel->insert($data);
 
 
